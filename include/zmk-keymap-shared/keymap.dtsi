@@ -33,8 +33,7 @@
 // ─── Behavior shortcuts ──────────────────────────────────────
 #define ___      &trans
 #define NUM_RCMD &num NUM RCMD
-#define HYPER1   &kp LC(LA(LG(LS(N1))))
-#define HYPER2   &kp LC(LA(LG(LS(N2))))
+#define HY(x)    &kp LC(LA(LG(LS(x))))
 #define CW       &caps_word
 #define BOOT     &bootloader
 #define RESET    &sys_reset
@@ -44,7 +43,7 @@
 #define VOL_UP   &kp C_VOL_UP
 #define MUTE     &kp C_MUTE
 #define SLEEP    &soft_off
-#define BT(n)    &bt BT_SEL n
+#define BT(x)    &bt BT_SEL x
 #define BTC      &bt BT_CLR
 #define BTCA     &bt BT_CLR_ALL
 #define OUTT     &out OUT_TOG
@@ -124,9 +123,9 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //                                           ╰─────────┴─────────┴─────────╯
 
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
-#define NAV_R1  HYPER1    HYPER2    &kp ESC   &tog NAV  &kp DEL   ___
+#define NAV_R1  &kp DEL   HY(N1)    HY(N2)    &tog NAV  ___       ___
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define NAV_R2  &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp SEMI  ___
+#define NAV_R2  &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp SEMI  &kp SEMI
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define NAV_R3  &kp HOME  &kp PG_DN &kp PG_UP &kp END   &kp INS   ___
 //             ├─────────┼─────────┼─────────┼─────────────────────────────╯
@@ -134,7 +133,7 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //             ╰─────────┴─────────┴─────────╯
 
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
-#define NUM_L1  ___       &kp EXCL  &kp AT    &kp HASH  &kp DLLR  &kp PRCNT
+#define NUM_L1  &kp ESC   &kp EXCL  &kp AT    &kp HASH  &kp DLLR  &kp PRCNT
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define NUM_L2  ___       &ns_n1    &ns_n2    &ns_n3    &ns_n4    &ns_n5
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
