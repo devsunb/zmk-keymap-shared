@@ -33,6 +33,7 @@
 // ─── Behavior shortcuts ──────────────────────────────────────
 #define ___      &trans
 #define NUM_RCMD &num NUM RCMD
+#define LS_TAB   &kp LS(TAB)
 #define HY(x)    &kp LC(LA(LG(LS(x))))
 #define CW       &caps_word
 #define BOOT     &bootloader
@@ -78,7 +79,7 @@ ZMK_HOLD_TAP(nav, bindings = <&mo>, <&kp>; flavor = "hold-preferred";
              //  LB5 LB4 LB3 LB2 LB1 LB0 RB0 RB1 RB2 RB3 RB4 RB5
              //              LH2 LH1 LH0 RH0 RH1 RH2
              hold-trigger-key-positions = <
-                                         RT0 RT1 RT2 RT3 RT4 RT5
+                 LT5 LT4 LT3 LT2 LT1 LT0 RT0 RT1 RT2 RT3 RT4 RT5
                  LM5                     RM0 RM1 RM2 RM3 RM4 RM5
                  LB5                     RB0 RB1 RB2 RB3 RB4 RB5
                              LH2 LH1     RH1                    >;)
@@ -113,7 +114,7 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //              ╰─────────┴─────────┴─────────╯
 
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
-#define NAV_L1  ___       ___       ___       ___       ___       ___
+#define NAV_L1  LS_TAB    &kp LS(Q) &kp LS(W) &kp LS(E) &kp LS(R) &kp LS(T)
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define NAV_L2  ___       ___       ___       ___       ___       ___
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
