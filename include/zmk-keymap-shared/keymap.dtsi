@@ -1,5 +1,5 @@
 /*
- * Shared keymap logic for 3*6 split keyboards (Corne, Cornix).
+ * Shared keymap logic for Corne, Cornix split keyboards.
  *
  * Layers
  *   BASE: Standard QWERTY
@@ -14,12 +14,6 @@
  *   #include <dt-bindings/zmk/outputs.h>
  *   #include <zmk-helpers/helper.h>
  *   #include "<keyboard>.h"
- *
- * Provides:
- *   - Layer indices, behavior shortcuts, NOSHIFT mod-morphs
- *   - Behaviors: nav / nav_semi / num / tri
- *   - Per-row binding macros (only the fully-shared blocks; the
- *     board-specific rows stay in each .keymap)
  */
 
 #pragma once
@@ -32,8 +26,8 @@
 
 // ─── Behavior shortcuts ──────────────────────────────────────
 #define ___      &trans
+#define NAV_SEMI &nav NAV SEMI
 #define NUM_RCMD &num NUM RCMD
-#define LS_TAB   &kp LS(TAB)
 #define HY(x)    &kp LC(LA(LG(LS(x))))
 #define CW       &caps_word
 #define BOOT     &bootloader
@@ -49,43 +43,63 @@
 #define BTCA     &bt BT_CLR_ALL
 #define OUTT     &out OUT_TOG
 
-// No-Shift mod-morph: ignores Shift so the base keycode is always sent
-#define NOSHIFT(name, keycode) \
-        ZMK_MOD_MORPH(name, \
-                      bindings = <&kp keycode>, <&kp keycode>; \
-                      mods = <(MOD_LSFT)>;)
+#define NOSHIFT(NAME, BINDING) \
+  ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; \
+                mods = <(MOD_LSFT)>;)
+NOSHIFT(ns_n1,    &kp N1)
+NOSHIFT(ns_n2,    &kp N2)
+NOSHIFT(ns_n3,    &kp N3)
+NOSHIFT(ns_n4,    &kp N4)
+NOSHIFT(ns_n5,    &kp N5)
+NOSHIFT(ns_n6,    &kp N6)
+NOSHIFT(ns_n7,    &kp N7)
+NOSHIFT(ns_n8,    &kp N8)
+NOSHIFT(ns_n9,    &kp N9)
+NOSHIFT(ns_n0,    &kp N0)
+NOSHIFT(ns_minus, &kp MINUS)
+NOSHIFT(ns_equal, &kp EQUAL)
+NOSHIFT(ns_grave, &kp GRAVE)
+NOSHIFT(ns_bslh,  &kp BSLH)
 
-NOSHIFT(ns_n1,    N1)
-NOSHIFT(ns_n2,    N2)
-NOSHIFT(ns_n3,    N3)
-NOSHIFT(ns_n4,    N4)
-NOSHIFT(ns_n5,    N5)
-NOSHIFT(ns_n6,    N6)
-NOSHIFT(ns_n7,    N7)
-NOSHIFT(ns_n8,    N8)
-NOSHIFT(ns_n9,    N9)
-NOSHIFT(ns_n0,    N0)
-NOSHIFT(ns_minus, MINUS)
-NOSHIFT(ns_equal, EQUAL)
-NOSHIFT(ns_grave, GRAVE)
-NOSHIFT(ns_bslh,  BSLH)
+#define NOMODS(NAME, BINDING1, BINDING2) \
+  ZMK_MOD_MORPH(NAME, bindings = <BINDING1>, <BINDING2>; \
+                mods = <(MOD_LSFT|MOD_LCTL|MOD_LALT|MOD_LGUI)>; \
+                keep-mods = <(MOD_LSFT|MOD_LCTL|MOD_LALT|MOD_LGUI)>;)
 
 // ─── Behaviors ───────────────────────────────────────────────
-// NAV: hold=layer, tap=; (positional hold-trigger avoids misfires)
-ZMK_HOLD_TAP(nav, bindings = <&mo>, <&kp>; flavor = "hold-preferred";
-             tapping-term-ms = <300>; quick-tap-ms = <0>;
              //  LT5 LT4 LT3 LT2 LT1 LT0 RT0 RT1 RT2 RT3 RT4 RT5
              //  LM5 LM4 LM3 LM2 LM1 LM0 RM0 RM1 RM2 RM3 RM4 RM5
              //  LB5 LB4 LB3 LB2 LB1 LB0 RB0 RB1 RB2 RB3 RB4 RB5
              //              LH2 LH1 LH0 RH0 RH1 RH2
-             hold-trigger-key-positions = <
-                 LT5 LT4 LT3 LT2 LT1 LT0 RT0 RT1 RT2 RT3 RT4 RT5
-                 LM5                     RM0 RM1 RM2 RM3 RM4 RM5
-                 LB5                     RB0 RB1 RB2 RB3 RB4 RB5
-                             LH2 LH1     RH1                    >;)
 
-ZMK_MOD_MORPH(nav_semi, bindings = <&nav NAV SEMI>, <&nav NAV COLON>;
-              mods = <(MOD_LSFT)>; keep-mods = <MOD_LSFT>;)
+ZMK_HOLD_TAP(nav, bindings = <&mo>, <&kp>; flavor = "hold-preferred";
+             tapping-term-ms = <300>; quick-tap-ms = <0>;
+             hold-trigger-key-positions = <
+                     LT4 LT3 LT2 LT1 LT0 RT0 RT1 RT2 RT3 RT4 RT5
+                 LM5 LM4 LM3 LM2 LM1 LM0 RM0 RM1 RM2 RM3 RM4 RM5
+                 LB5 LB4 LB3 LB2 LB1 LB0 RB0 RB1 RB2 RB3 RB4 RB5
+                             LH2 LH1     RH1
+             >;)
+
+ZMK_HOLD_TAP(rc, bindings = <&kp>, <&kp>; flavor = "balanced";
+             tapping-term-ms = <300>; quick-tap-ms = <0>;
+             hold-trigger-key-positions = <
+                     LT4 LT3 LT2 LT1 LT0
+                 LM5 LM4 LM3 LM2 LM1 LM0
+                 LB5 LB4 LB3 LB2 LB1 LB0
+                             LH2 LH1
+             >;)
+NOMODS(rc_sqt, &rc RCTRL SQT, &kp SQT)
+
+ZMK_HOLD_TAP(rs, bindings = <&kp>, <&kp>; flavor = "hold-preferred";
+             tapping-term-ms = <300>; quick-tap-ms = <0>;
+             hold-trigger-key-positions = <
+                     LT4 LT3 LT2 LT1 LT0
+                 LM5 LM4 LM3 LM2 LM1 LM0
+                 LB5 LB4 LB3 LB2 LB1 LB0
+                             LH2 LH1
+             >;)
+NOMODS(rs_rbkt, &rs RSHFT RBKT, &kp RBKT)
 
 ZMK_HOLD_TAP(num, bindings = <&mo>, <&kp>; flavor = "balanced";
              tapping-term-ms = <150>; quick-tap-ms = <0>;)
@@ -106,15 +120,15 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //              ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
 #define BASE_R1  &kp Y     &kp U     &kp I     &kp O     &kp P     &kp LBKT
 //              ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define BASE_R2  &kp H     &kp J     &kp K     &kp L     &nav_semi &kp SQT
+#define BASE_R2  &kp H     &kp J     &kp K     &kp L     NAV_SEMI  &rc_sqt
 //              ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define BASE_R3  &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp RBKT
+#define BASE_R3  &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &rs_rbkt
 //              ├─────────┼─────────┼─────────┼─────────────────────────────╯
 #define BASE_RT  &kp RET   NUM_RCMD  &kp BSPC
 //              ╰─────────┴─────────┴─────────╯
 
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
-#define NAV_L1  LS_TAB    &kp LS(Q) &kp LS(W) &kp LS(E) &kp LS(R) &kp LS(T)
+#define NAV_L1  ___       ___       ___       ___       ___       ___
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define NAV_L2  ___       ___       ___       ___       ___       ___
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
@@ -126,9 +140,9 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
 #define NAV_R1  &kp DEL   HY(N1)    HY(N2)    &tog NAV  ___       ___
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define NAV_R2  &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp SEMI  &kp SEMI
+#define NAV_R2  &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp SEMI  &kp SQT
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define NAV_R3  &kp HOME  &kp PG_DN &kp PG_UP &kp END   &kp INS   ___
+#define NAV_R3  &kp HOME  &kp PG_DN &kp PG_UP &kp END   &kp INS   &kp RBKT
 //             ├─────────┼─────────┼─────────┼─────────────────────────────╯
 #define NAV_RT  ___       ___       ___
 //             ╰─────────┴─────────┴─────────╯

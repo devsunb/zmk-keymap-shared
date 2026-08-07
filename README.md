@@ -26,3 +26,16 @@ manifest:
 
 ZMK_LAYER(Base, BASE_L1 ... BASE_R1 ...)
 ```
+
+## keymap-drawer
+
+`keymap-drawer.yaml` maps the behaviors defined here to legends, so it is
+versioned with `keymap.dtsi`. Consumers reference it instead of keeping a copy:
+
+```sh
+keymap -c zmk-keymap-shared/keymap-drawer.yaml parse -z config/<keyboard>.keymap |
+    keymap -c zmk-keymap-shared/keymap-drawer.yaml draw -j config/<keyboard>.json - -o keymap.svg
+```
+
+Run it from the west workspace root. `zmk_additional_includes` in the config
+resolves against the current directory, not against the config file.

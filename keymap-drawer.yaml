@@ -1,0 +1,114 @@
+parse_config:
+  zmk_additional_includes:
+    - zmk-helpers/include
+    - zmk-keymap-shared/include
+
+  mark_alternate_layer_activators: true
+
+  trans_legend:
+    tap: ""
+    type: trans
+
+  raw_binding_map:
+    "&caps_word": CW
+    "&sys_reset": Reset
+    "&bootloader": Boot
+    "&soft_off": Sleep
+    "&studio_unlock": Studio
+    "&out OUT_TOG":
+      shifted: $$mdi:usb$$
+      tap: $$mdi:toggle-switch$$
+      hold: $$mdi:bluetooth$$
+
+  zmk_keycode_map:
+    # Modifiers
+    LCTRL: $$mdi:apple-keyboard-control$$
+    LALT: $$mdi:apple-keyboard-option$$
+    LGUI: $$mdi:apple-keyboard-command$$
+    LSHFT: $$mdi:apple-keyboard-shift$$
+    RCTRL: $$mdi:apple-keyboard-control$$
+    RALT: $$mdi:apple-keyboard-option$$
+    RGUI: $$mdi:apple-keyboard-command$$
+    RCMD: $$mdi:apple-keyboard-command$$
+    RSHFT: $$mdi:apple-keyboard-shift$$
+
+    # Navigation
+    UP: ↑
+    DOWN: ↓
+    LEFT: ←
+    RIGHT: →
+    PG_UP: PgUp
+    PG_DN: PgDn
+    HOME: Home
+    END: End
+    INS: Ins
+
+    # Whitespace
+    BSPC: $$mdi:backspace$$
+    DEL: $$mdi:backspace-reverse-outline$$
+    ESC: $$mdi:keyboard-esc$$
+    RET: $$mdi:keyboard-return$$
+    SPACE: $$mdi:keyboard-space$$
+    TAB: $$mdi:keyboard-tab$$
+
+    # Media
+    C_MUTE: $$mdi:volume-off$$
+    C_PP: $$mdi:play-pause$$
+    C_VOL_UP: $$mdi:volume-high$$
+    C_VOL_DN: $$mdi:volume-medium$$
+    C_NEXT: $$mdi:skip-forward$$
+    C_PREV: $$mdi:skip-backward$$
+
+    # Symbols
+    EXCL: "!"
+    AT: "@"
+    HASH: "#"
+    DLLR: $
+    PRCNT: "%"
+    CARET: ^
+    AMPS: "&"
+    ASTRK: "*"
+    STAR: "*"
+    LPAR: (
+    RPAR: )
+    EQUAL: "="
+    PLUS: +
+    MINUS: "-"
+    UNDER: _
+    FSLH: /
+    BSLH: \
+    PIPE: "|"
+    SEMI: ";"
+    COLON: ":"
+    SQT: "'"
+    DQT: '"'
+    COMMA: ","
+    DOT: .
+    LBKT: "["
+    RBKT: "]"
+    LBRC: "{"
+    RBRC: "}"
+    GRAVE: "`"
+    TILDE: "~"
+
+draw_config:
+  key_w: 60
+  key_h: 56
+  split_gap: 40
+  combo_w: 28
+  combo_h: 26
+  inner_pad_w: 2
+  inner_pad_h: 2
+  outer_pad_w: 20
+  outer_pad_h: 20
+  line_spacing: 1.2
+  arc_radius: 6
+  small_pad: 2
+  append_colon_to_layer_header: false
+  dark_mode: auto
+  shrink_wide_legends: 6
+  glyph_tap_size: 18
+  glyph_hold_size: 12
+  glyph_shifted_size: 12
+  svg_extra_style: |
+    svg.keymap { font-family: system-ui, -apple-system, sans-serif; }
