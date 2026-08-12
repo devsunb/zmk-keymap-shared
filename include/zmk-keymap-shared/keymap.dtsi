@@ -3,9 +3,9 @@
  *
  * Layers
  *   BASE: Standard QWERTY
- *   NAV:  Navigation (semicolon hold)
- *   NUM:  Numbers + Symbols (RCMD hold)
- *   FN:   Functions (NAV + NUM hold)
+ *   NAV:  Navigation
+ *   NUM:  Numbers + Symbols
+ *   FN:   Functions
  *
  * Requires (include BEFORE this file):
  *   #include <behaviors.dtsi>
@@ -18,30 +18,32 @@
 
 #pragma once
 
-// ─── Layer indices ───────────────────────────────────────────
 #define BASE 0
 #define NAV  1
 #define NUM  2
 #define FN   3
 
-// ─── Behavior shortcuts ──────────────────────────────────────
-#define ___      &trans
-#define NAV_SEMI &nav NAV SEMI
-#define NUM_RCMD &num NUM RCMD
-#define HY(x)    &kp LC(LA(LG(LS(x))))
-#define CW       &caps_word
-#define BOOT     &bootloader
-#define RESET    &sys_reset
-#define PREV     &kp C_PREV
-#define NEXT     &kp C_NEXT
-#define VOL_DN   &kp C_VOL_DN
-#define VOL_UP   &kp C_VOL_UP
-#define MUTE     &kp C_MUTE
-#define SLEEP    &soft_off
-#define BT(x)    &bt BT_SEL x
-#define BTC      &bt BT_CLR
-#define BTCA     &bt BT_CLR_ALL
-#define OUTT     &out OUT_TOG
+#define ___     &trans
+#define NUM_RET &lt NUM RET
+#define NAV_F16 &lt NAV F16
+#define HY(x)   &kp LC(LA(LG(LS(x))))
+#define CW      &caps_word
+#define BRI_DN  &kp C_BRI_DN
+#define BRI_UP  &kp C_BRI_UP
+#define PREV    &kp C_PREV
+#define NEXT    &kp C_NEXT
+#define VOL_DN  &kp C_VOL_DN
+#define VOL_UP  &kp C_VOL_UP
+#define MUTE    &kp C_MUTE
+#define BOOT    &bootloader
+#define RESET   &sys_reset
+#define SLEEP   &soft_off
+#define BT(x)   &bt BT_SEL x
+#define BTC     &bt BT_CLR
+#define BTCA    &bt BT_CLR_ALL
+#define OUTT    &out OUT_TOG
+
+&lt { flavor = "balanced"; };
 
 #define NOSHIFT(NAME, BINDING) \
   ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; \
@@ -66,47 +68,28 @@ NOSHIFT(ns_bslh,  &kp BSLH)
                 mods = <(MOD_LSFT|MOD_LCTL|MOD_LALT|MOD_LGUI)>; \
                 keep-mods = <(MOD_LSFT|MOD_LCTL|MOD_LALT|MOD_LGUI)>;)
 
-// ─── Behaviors ───────────────────────────────────────────────
-             //  LT5 LT4 LT3 LT2 LT1 LT0 RT0 RT1 RT2 RT3 RT4 RT5
-             //  LM5 LM4 LM3 LM2 LM1 LM0 RM0 RM1 RM2 RM3 RM4 RM5
-             //  LB5 LB4 LB3 LB2 LB1 LB0 RB0 RB1 RB2 RB3 RB4 RB5
-             //              LH2 LH1 LH0 RH0 RH1 RH2
+//    LT5 LT4 LT3 LT2 LT1 LT0 RT0 RT1 RT2 RT3 RT4 RT5
+//    LM5 LM4 LM3 LM2 LM1 LM0 RM0 RM1 RM2 RM3 RM4 RM5
+//    LB5 LB4 LB3 LB2 LB1 LB0 RB0 RB1 RB2 RB3 RB4 RB5
+//                LH2 LH1 LH0 RH0 RH1 RH2
 
-ZMK_HOLD_TAP(nav, bindings = <&mo>, <&kp>; flavor = "hold-preferred";
-             tapping-term-ms = <300>; quick-tap-ms = <0>;
-             hold-trigger-key-positions = <
-                     LT4 LT3 LT2 LT1 LT0 RT0 RT1 RT2 RT3 RT4 RT5
-                 LM5 LM4 LM3 LM2 LM1 LM0 RM0 RM1 RM2 RM3 RM4 RM5
-                 LB5 LB4 LB3 LB2 LB1 LB0 RB0 RB1 RB2 RB3 RB4 RB5
-                             LH2 LH1     RH1
-             >;)
-
-ZMK_HOLD_TAP(rc, bindings = <&kp>, <&kp>; flavor = "balanced";
-             tapping-term-ms = <300>; quick-tap-ms = <0>;
-             hold-trigger-key-positions = <
-                     LT4 LT3 LT2 LT1 LT0
-                 LM5 LM4 LM3 LM2 LM1 LM0
-                 LB5 LB4 LB3 LB2 LB1 LB0
-                             LH2 LH1
-             >;)
-NOMODS(rc_sqt, &rc RCTRL SQT, &kp SQT)
-
-ZMK_HOLD_TAP(rs, bindings = <&kp>, <&kp>; flavor = "hold-preferred";
-             tapping-term-ms = <300>; quick-tap-ms = <0>;
-             hold-trigger-key-positions = <
-                     LT4 LT3 LT2 LT1 LT0
-                 LM5 LM4 LM3 LM2 LM1 LM0
-                 LB5 LB4 LB3 LB2 LB1 LB0
-                             LH2 LH1
-             >;)
-NOMODS(rs_rbkt, &rs RSHFT RBKT, &kp RBKT)
-
-ZMK_HOLD_TAP(num, bindings = <&mo>, <&kp>; flavor = "balanced";
-             tapping-term-ms = <150>; quick-tap-ms = <0>;)
+#define RMT_CORE \
+  bindings = <&kp>, <&kp>; \
+  tapping-term-ms = <300>; \
+  quick-tap-ms = <0>; \
+  hold-trigger-key-positions = < \
+          LT4 LT3 LT2 LT1 LT0    \
+      LM5 LM4 LM3 LM2 LM1 LM0    \
+      LB5 LB4 LB3 LB2 LB1 LB0    \
+                  LH2 LH1        \
+  >;
+ZMK_HOLD_TAP(rbmt, flavor = "balanced"; RMT_CORE)
+NOMODS(rc_sqt, &rbmt RCTRL SQT, &kp SQT)
+ZMK_HOLD_TAP(rmt, flavor = "hold-preferred"; RMT_CORE)
+NOMODS(rs_rbkt, &rmt RSHFT RBKT, &kp RBKT)
 
 ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 
-// ─── Shared row blocks ───────────────────────────────────────
 //              ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
 #define BASE_L1  &kp TAB   &kp Q     &kp W     &kp E     &kp R     &kp T
 //              ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
@@ -120,11 +103,11 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //              ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
 #define BASE_R1  &kp Y     &kp U     &kp I     &kp O     &kp P     &kp LBKT
 //              ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define BASE_R2  &kp H     &kp J     &kp K     &kp L     NAV_SEMI  &rc_sqt
+#define BASE_R2  &kp H     &kp J     &kp K     &kp L     &kp SEMI  &rc_sqt
 //              ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define BASE_R3  &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &rs_rbkt
 //              ├─────────┼─────────┼─────────┼─────────────────────────────╯
-#define BASE_RT  &kp RET   NUM_RCMD  &kp BSPC
+#define BASE_RT  NUM_RET   NAV_F16   &kp BSPC
 //              ╰─────────┴─────────┴─────────╯
 
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
@@ -140,7 +123,7 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
 #define NAV_R1  &kp DEL   HY(N1)    HY(N2)    &tog NAV  ___       ___
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define NAV_R2  &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp SEMI  &kp SQT
+#define NAV_R2  &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp SPACE &kp SQT
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define NAV_R3  &kp HOME  &kp PG_DN &kp PG_UP &kp END   &kp INS   &kp RBKT
 //             ├─────────┼─────────┼─────────┼─────────────────────────────╯
@@ -162,7 +145,7 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define NUM_R2  &ns_n6    &ns_n7    &ns_n8    &ns_n9    &ns_n0    &ns_grave
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define NUM_R3  &ns_bslh  &kp PIPE  ___       ___       ___       &kp SPACE
+#define NUM_R3  &ns_bslh  &kp PIPE  ___       ___       ___       &kp RET
 //             ├─────────┼─────────┼─────────┼─────────────────────────────╯
 #define NUM_RT  ___       ___       ___
 //             ╰─────────┴─────────┴─────────╯
@@ -170,7 +153,9 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //            ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
 #define FN_L1  &kp F1    &kp F2    &kp F3    &kp F4    &kp F5    &kp F6
 //            ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define FN_L2  ___       ___       ___       PREV      NEXT      VOL_UP
+#define FN_L2  ___       BRI_DN    BRI_UP    PREV      NEXT      VOL_UP
+//            ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+#define FN_L3  ___       BOOT      RESET     SLEEP     MUTE      VOL_DN
 //            ╰─────────────────────────────┼─────────┼─────────┼─────────┤
 #define FN_LT                                ___       ___       &kp C_PP
 //                                          ╰─────────┴─────────┴─────────╯
@@ -178,7 +163,9 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //            ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
 #define FN_R1  &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12
 //            ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define FN_R2  BT(0)     BT(1)     BT(2)     BT(3)     ___       BT(4)
+#define FN_R2  BT(0)     BT(1)     BT(2)     BT(3)     BT(4)     OUTT
+//            ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+#define FN_R3  BTC       BTCA      SLEEP     RESET     BOOT      ___
 //            ├─────────┼─────────┼─────────┼─────────────────────────────╯
 #define FN_RT  ___       ___       ___
 //            ╰─────────┴─────────┴─────────╯
