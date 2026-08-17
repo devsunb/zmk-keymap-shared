@@ -24,8 +24,8 @@
 #define FN   3
 
 #define ___     &trans
-#define NUM_RET &lt NUM RET
-#define NAV_F16 &lt NAV F16
+#define NAV_RET &lt NAV RET
+#define NUM_F16 &lt NUM F16
 #define HY(x)   &kp LC(LA(LG(LS(x))))
 #define CW      &caps_word
 #define BRI_DN  &kp C_BRI_DN
@@ -107,7 +107,7 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //              ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define BASE_R3  &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &rs_rbkt
 //              ├─────────┼─────────┼─────────┼─────────────────────────────╯
-#define BASE_RT  NUM_RET   NAV_F16   &kp BSPC
+#define BASE_RT  NAV_RET   NUM_F16   &kp BSPC
 //              ╰─────────┴─────────┴─────────╯
 
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
@@ -121,7 +121,7 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //                                           ╰─────────┴─────────┴─────────╯
 
 //             ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
-#define NAV_R1  &kp DEL   HY(N1)    HY(N2)    &tog NAV  ___       ___
+#define NAV_R1  &kp DEL   HY(N1)    HY(N2)    &tog NAV  &kp RET   ___
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define NAV_R2  &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp SPACE &kp SQT
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
@@ -145,7 +145,7 @@ ZMK_CONDITIONAL_LAYER(tri, NAV NUM, FN)
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 #define NUM_R2  &ns_n6    &ns_n7    &ns_n8    &ns_n9    &ns_n0    &ns_grave
 //             ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
-#define NUM_R3  &ns_bslh  &kp PIPE  ___       ___       ___       &kp RET
+#define NUM_R3  &ns_bslh  &kp PIPE  ___       ___       ___       ___
 //             ├─────────┼─────────┼─────────┼─────────────────────────────╯
 #define NUM_RT  ___       ___       ___
 //             ╰─────────┴─────────┴─────────╯
